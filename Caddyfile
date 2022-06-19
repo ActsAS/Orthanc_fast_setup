@@ -1,0 +1,27 @@
+your.vhost.here {
+
+    @GuestList {
+        # Local
+        remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 127.0.0.1/8
+
+        # Add the allowed IP here
+
+    }
+
+    log {
+        format json
+    }
+
+    tls {
+        protocols tls1.3
+    }
+
+    header / Strict-Transport-Security "max-age=3600"   
+
+    handle @GuestList {
+
+        reverse_proxy pacs:8042
+    }
+
+    respond "<h1>Nothing to see here</h1>"  403
+}
